@@ -76,6 +76,6 @@ if uploaded_file is not None:
     # Apply translation to rotated data
     translated_data = [(x + translation_vector[0], y + translation_vector[1], z + translation_vector[2], atom_type) for x, y, z, atom_type in rotated_data]
     
-    original_xyz = generate_xyz_data(molecule_data)
+    original_xyz = generate_xyz_data(rotated_data)
     transformed_xyz = generate_xyz_data(translated_data)
     plot_molecule_with_stmol(original_xyz, transformed_xyz)
