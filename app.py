@@ -1,27 +1,21 @@
 import streamlit as st
+from stmol import showmol
+import py3Dmol
 import numpy as np
-import plotly.graph_objects as go
-from utils.molecule_functions import Molecule, read_sdf, rotate_molecule, calculate_contact
+from utils.molecule_functions import Molecule, read_sdf, rotate_molecule
 
-def plot_molecule(coordinates, symbols, atom_radii, displacement_vector):
-    fig = go.Figure()
-    atom_color = {'C': 'green', 'H': 'white', 'O': 'red', 'N': 'blue', 'S': 'yellow'}
-
+def plot_molecule_with_stmol(coordinates, symbols, displacement_vector):
+    xyz_data = ''
     for coord, symbol in zip(coordinates, symbols):
-        radius = atom_radii.get(symbol, 1.0)  # Uso de get para evitar KeyError, con 1.0 como valor por defecto
-        theta, phi = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-        for addition in [0, 1]:  # 0 para la molécula original, 1 para la desplazada
-            disp = displacement_vector * addition
-            x = coord[0] + disp[0] + radius * np.sin(phi) * np.cos(theta)
-            y = coord[1] + disp[1] + radius * np.sin(phi) * np.sin(theta)
-            z = coord[2] + disp[2] + radius * np.cos(phi)
-            color = atom_color.get(symbol, 'grey')  # Manejo de colores para tipos desconocidos
-            fig.add_trace(go.Surface(x=x, y=y, z=z, colorscale=[[0, color], [1, color]], showscale=False))
-
-    fig.update_layout(title='Visualización Molecular 3D con Imagen Desplazada',
-                      autosize=False, width=800, height=800,
-                      margin=dict(l=0, r=0, b=0, t=0))
-    return fig
+        # Asumimos que los símbolos ya están en el formato correcto para XYZ (C, H, O, N, etc.)
+        xyz_data += f'{symbol} {coord[0]:.3f} {coord[1]:.3f} {coord[2]:.3f}\n'
+    
+    xyzview = py3Dmol.view(width=400, height=400)
+    xyzview.addModel(xyz_data, 'xyz')
+    xyzview.setStyle({'sphere': {}})
+    xyzview.setBackgroundColor('white')
+    xyzview.zoomTo()
+    showmol(xyzview, height=500, width=800)
 
 # Streamlit App
 st.title('Visualización Molecular 3D')
@@ -33,7 +27,7 @@ coordinates, symbols, atom_radii = read_sdf(file_path)
 # Configuración de controles para la orientación y traslación
 angle = st.slider('Ángulo de Rotación (grados)', 0, 360, 0)
 direction_vector = np.array([
-    st.number_input('Componente X del vector de traslación', value=1.0),
+    st.number_input('Componente X del vector de traslación', value=0.0),
     st.number_input('Componente Y del vector de traslación', value=0.0),
     st.number_input('Componente Z del vector de traslación', value=0.0)
 ])
@@ -41,14 +35,10 @@ direction_vector = np.array([
 # Convertir ángulo a radianes y calcular la nueva configuración de la molécula
 angle_rad = np.radians(angle)
 rotated_molecule = rotate_molecule(Molecule(coordinates, symbols, atom_radii), angle_rad)
-displacement_length = np.linalg.norm(direction_vector)
-if displacement_length == 0:
-    st.error('El vector de traslación no puede ser el vector cero.')
-else:
-    normalized_direction_vector = direction_vector / displacement_length
-    max_displacement = calculate_contact(rotated_molecule, normalized_direction_vector)
-    displacement_vector = max_displacement * normalized_direction_vector
 
-    # Mostrar la figura
-    fig = plot_molecule(rotated_molecule.coordinates, rotated_molecule.symbols, atom_radii, displacement_vector)
-    st.plotly_chart(fig)
+# Aplicar el vector de traslación
+displaced_coordinates = rotated_molecule.coordinates + direction_vector
+
+# Mostrar la figura con stmol
+plot_molecule_with_stmol(displaced_coordinates, rotated_molecule.symbols, direction_vector)
+
