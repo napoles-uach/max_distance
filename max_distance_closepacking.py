@@ -145,7 +145,7 @@ def calculate_contact(molecule, direction_vector):
     return max_displacement
 
 # Suponiendo que tienes datos parseados de un archivo SDF
-coordinates, symbols, radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
+#coordinates, symbols, radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
 atom_radii = {
     'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8
 }
@@ -153,7 +153,7 @@ atom_radii = {
 molecule = Molecule(coordinates, symbols, atom_radii)
 direction_vector = np.array([1, 0, 0])  # Ejemplo de dirección
 max_displacement = calculate_contact(molecule, direction_vector)
-print("Máximo desplazamiento:", max_displacement)
+#print("Máximo desplazamiento:", max_displacement)
 
 import numpy as np
 import plotly.graph_objects as go
@@ -223,6 +223,6 @@ def plot_molecule(coordinates, symbols, atom_radii):
     fig.show()
 
 # Suponiendo que el archivo SDF está en el directorio correcto
-coordinates, symbols, atom_radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
-plot_molecule(coordinates, symbols, atom_radii)
+#coordinates, symbols, atom_radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
+#plot_molecule(coordinates, symbols, atom_radii)
 
