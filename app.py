@@ -30,7 +30,7 @@ def plot_molecule_with_stmol(xyz_data):
     xyzview = py3Dmol.view(width=800, height=400)
     xyzview.addModel(xyz_data, 'xyz')
     xyzview.setStyle({'sphere': {}})
-    xyzview.setBackgroundColor('white')
+    xyzview.setBackgroundColor('green')
     xyzview.zoomTo()
     showmol(xyzview, height=500, width=800)
 
