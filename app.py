@@ -22,7 +22,7 @@ def read_sdf_from_string(content):
                     continue
         if line.strip().endswith('V2000'):
             reading_molecule = True
-
+        st.write(xyz_data)
     return xyz_data
 
 def plot_molecule_with_stmol(xyz_data):
