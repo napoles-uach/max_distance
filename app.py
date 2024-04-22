@@ -70,22 +70,6 @@ def apply_rotation(molecule, angles):
     rotated_coords = np.dot(molecule.coordinates, R.T)
     return Molecule(rotated_coords, molecule.symbols, molecule.atom_radii)
 
-#def calculate_contact(molecule, direction_vector):
-#    n_atoms = len(molecule.coordinates)
-#    max_displacement = 0
-#    for i in range(n_atoms):
-#        for j in range(i + 1, n_atoms):
-#            distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
-#            distance = np.linalg.norm(distance_vector)
-#            projection = np.dot(distance_vector, direction_vector) / np.linalg.norm(direction_vector)
-#            normal_distance = np.sqrt(distance**2 - projection**2)
-#            sum_vdw = molecule.get_radius(i) + molecule.get_radius(j)
-#            if normal_distance <= sum_vdw:
-#                displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
-#                if displacement > max_displacement:
-#                    max_displacement = displacement
-#    return max_displacement
-
 def calculate_contact(molecule, direction_vector):
     n_atoms = len(molecule.coordinates)
     max_displacement = 0
@@ -93,19 +77,16 @@ def calculate_contact(molecule, direction_vector):
         for j in range(i + 1, n_atoms):
             distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
             distance = np.linalg.norm(distance_vector)
-            sum_vdw = molecule.get_radius(i) + molecule.get_radius(j)
-
-            # Descarta el par si la distancia entre los átomos es mayor que la suma de sus radios
-            if distance > sum_vdw:
-                continue
-
             projection = np.dot(distance_vector, direction_vector) / np.linalg.norm(direction_vector)
             normal_distance = np.sqrt(distance**2 - projection**2)
+            sum_vdw = molecule.get_radius(i) + molecule.get_radius(j)
             if normal_distance <= sum_vdw:
                 displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
                 if displacement > max_displacement:
                     max_displacement = displacement
     return max_displacement
+
+
 
 def generate_xyz_data(molecule):
     xyz_data = ""
