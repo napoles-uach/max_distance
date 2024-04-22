@@ -67,4 +67,5 @@ if uploaded_file is not None:
     transformed_molecule = [(x + displacement_vector[0], y, z, atom_type) for x, y, z, atom_type in molecule_data]
     transformed_xyz = generate_xyz_data(transformed_molecule)
     plot_molecule_with_stmol(original_xyz, transformed_xyz)
+    st.write(max_displacement)
 
