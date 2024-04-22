@@ -107,7 +107,8 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
 
 st.title('3D Molecular Visualization with Rotation and Automatic Displacement Calculation')
 
-file_path = st.selectbox("Choose a molecule",['PCBM-3D-structure-CT1089645246.sdf','ChEBI_27732.sdf','cholesterol-3D-structure-CT1001897301.sdf'])#'PCBM-3D-structure-CT1089645246.sdf'
+col1,col2=st.columns([2,3])
+file_path = col1.selectbox("Choose a molecule",['PCBM-3D-structure-CT1089645246.sdf','ChEBI_27732.sdf','cholesterol-3D-structure-CT1001897301.sdf'])#'PCBM-3D-structure-CT1089645246.sdf'
 molecule_data = read_sdf_from_file(file_path)
 molecule = Molecule(
     coordinates=[data[:3] for data in molecule_data],
@@ -116,7 +117,7 @@ molecule = Molecule(
 )
 
 #----------
-uploaded_file = st.file_uploader("Upload your SDF file, only molecules with C,H,O,N,S atoms", type=["sdf"])
+uploaded_file = col2.file_uploader("Upload your SDF file, only molecules with C,H,O,N,S atoms", type=["sdf"])
 if uploaded_file is not None:
     file_content = uploaded_file.getvalue().decode("utf-8")
     molecule_data = read_sdf_from_string(file_content)
