@@ -24,7 +24,7 @@ def read_sdf_from_string(content):
                     xyz_data += xyz_line
                 except ValueError:
                     continue  # Manejo de error por si alguna conversión falla
-
+    st.text(xyz_data)
     return xyz_data
 
 def plot_molecule_with_stmol(xyz_data):
