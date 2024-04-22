@@ -116,7 +116,7 @@ molecule = Molecule(
 )
 
 #----------
-uploaded_file = st.file_uploader("Upload your SDF file", type=["sdf"])
+uploaded_file = st.file_uploader("Upload your SDF file, only molecules with C,H,O,N,S atoms", type=["sdf"])
 if uploaded_file is not None:
     file_content = uploaded_file.getvalue().decode("utf-8")
     molecule_data = read_sdf_from_string(file_content)
