@@ -28,24 +28,30 @@ def read_sdf_from_string(content):
 
     return molecule_data
 
-def generate_xyz_data(molecule_data, displacement_vector=np.array([0,0,0])):
-    """ Genera datos XYZ modificados con un vector de desplazamiento. """
+def rotate_molecule(molecule_data, angle_rad):
+    """ Rotates molecule data around the Z-axis by a given angle in radians. """
+    rotation_matrix = np.array([
+        [np.cos(angle_rad), -np.sin(angle_rad), 0],
+        [np.sin(angle_rad), np.cos(angle_rad), 0],
+        [0, 0, 1]
+    ])
+    rotated_data = []
+    for x, y, z, atom_type in molecule_data:
+        rotated_coords = np.dot(rotation_matrix, np.array([x, y, z]))
+        rotated_data.append((rotated_coords[0], rotated_coords[1], rotated_coords[2], atom_type))
+    return rotated_data
+
+def generate_xyz_data(molecule_data):
+    """ Generates XYZ format data from molecule data. """
     xyz_data = ""
     for x, y, z, atom_type in molecule_data:
-        x += displacement_vector[0]
-        y += displacement_vector[1]
-        z += displacement_vector[2]
         xyz_data += f"{atom_type} {x:.3f} {y:.3f} {z:.3f}\n"
-
     return str(len(molecule_data)) + "\n\n" + xyz_data
 
-def plot_molecule_with_stmol(xyz_data):
-    if not xyz_data:
-        st.error("No molecule data found. Please check the SDF file.")
-        return
-
+def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     xyzview = py3Dmol.view(width=800, height=400)
-    xyzview.addModel(xyz_data, 'xyz')
+    xyzview.addModel(original_xyz, 'xyz')
+    xyzview.addModel(transformed_xyz, 'xyz')
     xyzview.setStyle({'sphere': {}})
     xyzview.setBackgroundColor('white')
     xyzview.zoomTo()
@@ -56,8 +62,8 @@ st.title('3D Molecular Visualization with Orientation and Translation Controls')
 
 uploaded_file = st.file_uploader("Upload your SDF file", type=["sdf"])
 angle = st.slider('Rotation angle (degrees)', 0, 360, 180)
-direction_vector = np.array([
-    st.number_input('Translation vector X', value=0.0),
+translation_vector = np.array([
+    st.number_input('Translation vector X', value=1.0),
     st.number_input('Translation vector Y', value=0.0),
     st.number_input('Translation vector Z', value=0.0)
 ])
@@ -65,7 +71,11 @@ direction_vector = np.array([
 if uploaded_file is not None:
     file_content = uploaded_file.getvalue().decode("utf-8")
     molecule_data = read_sdf_from_string(file_content)
-    rotation_angle = np.radians(angle)  # Convert angle to radians for rotation calculations
-    # Here you might add rotation logic if needed using numpy or similar to adjust molecule_data
-    xyz_data = generate_xyz_data(molecule_data, displacement_vector=direction_vector)
-    plot_molecule_with_stmol(xyz_data)
+    angle_rad = np.radians(angle)
+    rotated_data = rotate_molecule(molecule_data, angle_rad)
+    # Apply translation to rotated data
+    translated_data = [(x + translation_vector[0], y + translation_vector[1], z + translation_vector[2], atom_type) for x, y, z, atom_type in rotated_data]
+    
+    original_xyz = generate_xyz_data(molecule_data)
+    transformed_xyz = generate_xyz_data(translated_data)
+    plot_molecule_with_stmol(original_xyz, transformed_xyz)
