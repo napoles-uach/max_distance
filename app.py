@@ -13,7 +13,6 @@ class Molecule:
         return self.atom_radii[self.symbols[atom_index]]
 
 def read_sdf_from_file(file_path):
-    """ Read SDF content from a file path and extract molecule data. """
     with open(file_path, 'r') as file:
         content = file.read()
     
@@ -39,6 +38,16 @@ def read_sdf_from_file(file_path):
                     continue
     return molecule_data
 
+def apply_rotation(molecule, angles):
+    rx, ry, rz = np.radians(angles)  # Convert degrees to radians
+    Rx = np.array([[1, 0, 0], [0, np.cos(rx), -np.sin(rx)], [0, np.sin(rx), np.cos(rx)]])
+    Ry = np.array([[np.cos(ry), 0, np.sin(ry)], [0, 1, 0], [-np.sin(ry), 0, np.cos(ry)]])
+    Rz = np.array([[np.cos(rz), -np.sin(rz), 0], [np.sin(rz), np.cos(rz), 0], [0, 0, 1]])
+    # Combine rotations
+    R = np.dot(Rz, np.dot(Ry, Rx))
+    rotated_coords = np.dot(molecule.coordinates, R.T)
+    return Molecule(rotated_coords, molecule.symbols, molecule.atom_radii)
+
 def calculate_contact(molecule, direction_vector):
     n_atoms = len(molecule.coordinates)
     max_displacement = 0
@@ -61,18 +70,17 @@ def generate_xyz_data(molecule_data):
         xyz_data += f"{atom_type} {x:.3f} {y:.3f} {z:.3f}\n"
     return str(len(molecule_data)) + "\n\n" + xyz_data
 
-def plot_molecule_with_stmol(original_xyz, transformed_xyz):
+def plot_molecule_with_stmol(xyz_data):
     xyzview = py3Dmol.view(width=800, height=400)
-    xyzview.addModel(original_xyz, 'xyz')
-    xyzview.addModel(transformed_xyz, 'xyz')
+    xyzview.addModel(xyz_data, 'xyz')
     xyzview.setStyle({'sphere': {}})
     xyzview.setBackgroundColor('white')
     xyzview.zoomTo()
     showmol(xyzview, height=500, width=800)
 
-st.title('3D Molecular Visualization with Automatic Displacement Calculation')
+st.title('3D Molecular Visualization with Rotation and Automatic Displacement Calculation')
 
-# Path to the SDF file
+# Load the SDF file
 file_path = 'PCBM-3D-structure-CT1089645246.sdf'
 molecule_data = read_sdf_from_file(file_path)
 molecule = Molecule(
@@ -80,11 +88,25 @@ molecule = Molecule(
     symbols=[data[3] for data in molecule_data],
     atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
 )
+
+# User inputs for rotation
+angle_x = st.slider('Rotation angle around X-axis (degrees)', -180, 180, 0)
+angle_y = st.slider('Rotation angle around Y-axis (degrees)', -180, 180, 0)
+angle_z = st.slider('Rotation angle around Z-axis (degrees)', -180, 180, 0)
+
+# Apply rotation
+rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
+
+# Calculate and apply displacement
 direction_vector = np.array([1, 0, 0])  # Example direction vector
-max_displacement = calculate_contact(molecule, direction_vector)
+max_displacement = calculate_contact(rotated_molecule, direction_vector)
 displacement_vector = np.array([max_displacement, 0, 0])  # Apply displacement along x-axis
-transformed_molecule = [(x + displacement_vector[0], y, z, atom_type) for x, y, z, atom_type in molecule_data]
-original_xyz = generate_xyz_data(molecule_data)
-transformed_xyz = generate_xyz_data(transformed_molecule)
-plot_molecule_with_stmol(original_xyz, transformed_xyz)
+transformed_coords = rotated_molecule.coordinates + displacement_vector
+transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, rotated_molecule.atom_radii)
+
+# Generate XYZ data and plot
+original_xyz = generate_xyz_data(rotated_molecule.coordinates)
+transformed_xyz = generate_xyz_data(transformed_coords)
+plot_molecule_with_stmol(transformed_xyz)  # Plot only transformed molecule for simplicity
+
 
