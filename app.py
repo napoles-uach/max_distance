@@ -103,6 +103,6 @@ transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, ro
 
 original_xyz = generate_xyz_data(rotated_molecule)
 transformed_xyz = generate_xyz_data(transformed_molecule)
-plot_molecule_with_stmol(transformed_xyz)
+plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
 
