@@ -1,10 +1,8 @@
-import streamlit as st
-from stmol import showmol
-import py3Dmol
-
 def read_sdf_from_string(content):
+    """ Parsea el contenido de un archivo SDF desde un string. """
     lines = content.split('\n')
     xyz_data = ''
+    atom_count = 0
     reading_molecule = False
 
     for line in lines:
@@ -20,12 +18,14 @@ def read_sdf_from_string(content):
                 try:
                     x, y, z = map(float, parts[:3])
                     atom_type = parts[3]
-                    xyz_line = f'{atom_type} {x:.3f} {y:.3f} {z:.3f}\n'
-                    xyz_data += xyz_line
+                    xyz_data += f'{atom_type} {x:.3f} {y:.3f} {z:.3f}\n'
+                    atom_count += 1
                 except ValueError:
                     continue  # Manejo de error por si alguna conversión falla
-    st.text(xyz_data)
-    return xyz_data
+
+    # Preparar el formato XYZ con el conteo de átomos y una línea en blanco
+    xyz_data_formatted = f"{atom_count}\n\n{xyz_data}"
+    return xyz_data_formatted
 
 def plot_molecule_with_stmol(xyz_data):
     if not xyz_data:
@@ -47,3 +47,4 @@ if uploaded_file is not None:
     file_content = uploaded_file.getvalue().decode("utf-8")
     xyz_data = read_sdf_from_string(file_content)
     plot_molecule_with_stmol(xyz_data)
+
