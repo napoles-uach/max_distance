@@ -105,7 +105,7 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     xyzview.zoomTo()
     showmol(xyzview, height=500, width=800)
 
-st.title('3D Molecular Visualization with Rotation and Automatic Displacement Calculation')
+st.markdown('## Automatic Molecular Displacement Calculation')
 
 col1,col2=st.columns([2,3])
 file_path = col1.selectbox("Choose a molecule",['PCBM-3D-structure-CT1089645246.sdf','ChEBI_27732.sdf','cholesterol-3D-structure-CT1001897301.sdf'])#'PCBM-3D-structure-CT1089645246.sdf'
