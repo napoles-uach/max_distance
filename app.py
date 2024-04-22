@@ -71,9 +71,12 @@ def generate_xyz_data(molecule):
         xyz_data += f"{atom_type} {x:.3f} {y:.3f} {z:.3f}\n"
     return str(len(molecule.coordinates)) + "\n\n" + xyz_data
 
-def plot_molecule_with_stmol(xyz_data):
+
+
+def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     xyzview = py3Dmol.view(width=800, height=400)
-    xyzview.addModel(xyz_data, 'xyz')
+    xyzview.addModel(original_xyz, 'xyz')
+    xyzview.addModel(transformed_xyz, 'xyz')
     xyzview.setStyle({'sphere': {}})
     xyzview.setBackgroundColor('white')
     xyzview.zoomTo()
