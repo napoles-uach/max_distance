@@ -28,7 +28,7 @@ def read_sdf_from_string(content):
 def plot_molecule_with_stmol(xyz_data):
     """ Muestra la molécula utilizando py3Dmol. """
     xyzview = py3Dmol.view(width=800, height=400)
-    xyzview.addModel(xyz_data, 'xyz')
+    xyzview.addModel(xyz_data, 'sdf')
     xyzview.setStyle({'sphere': {}})
     xyzview.setBackgroundColor('green')
     xyzview.zoomTo()
