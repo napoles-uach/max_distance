@@ -92,6 +92,18 @@ molecule = Molecule(
     atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
 )
 
+#----------
+uploaded_file = st.file_uploader("Upload your SDF file", type=["sdf"])
+if uploaded_file is not None:
+    file_content = uploaded_file.getvalue().decode("utf-8")
+    molecule_data = read_sdf_from_string(file_content)
+    molecule = Molecule(
+        coordinates=[data[:3] for data in molecule_data],
+        symbols=[data[3] for data in molecule_data],
+        atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
+    )
+#----------
+
 angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', -180, 180, 0)
 angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', -180, 180, 0)
 angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', -180, 180, 0)
