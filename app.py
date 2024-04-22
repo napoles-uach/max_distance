@@ -1,33 +1,34 @@
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
-
-# Asumiendo que las clases y funciones como Molecule, read_sdf, etc., ya están definidas.
+from utils.molecule_functions import Molecule, read_sdf, rotate_molecule, calculate_contact
 
 def plot_molecule(coordinates, symbols, atom_radii, displacement_vector):
     fig = go.Figure()
     atom_color = {'C': 'green', 'H': 'white', 'O': 'red', 'N': 'blue', 'S': 'yellow'}
 
     for coord, symbol in zip(coordinates, symbols):
-        radius = atom_radii.get(symbol, 1.0)
+        radius = atom_radii.get(symbol, 1.0)  # Uso de get para evitar KeyError, con 1.0 como valor por defecto
         theta, phi = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-        for addition in [0, 1]:
+        for addition in [0, 1]:  # 0 para la molécula original, 1 para la desplazada
             disp = displacement_vector * addition
             x = coord[0] + disp[0] + radius * np.sin(phi) * np.cos(theta)
             y = coord[1] + disp[1] + radius * np.sin(phi) * np.sin(theta)
             z = coord[2] + disp[2] + radius * np.cos(phi)
-            color = atom_color.get(symbol, 'grey')
+            color = atom_color.get(symbol, 'grey')  # Manejo de colores para tipos desconocidos
             fig.add_trace(go.Surface(x=x, y=y, z=z, colorscale=[[0, color], [1, color]], showscale=False))
 
-    fig.update_layout(title='Visualización Molecular 3D con Imagen Desplazada', autosize=False,
-                      width=800, height=800, margin=dict(l=0, r=0, b=0, t=0))
+    fig.update_layout(title='Visualización Molecular 3D con Imagen Desplazada',
+                      autosize=False, width=800, height=800,
+                      margin=dict(l=0, r=0, b=0, t=0))
     return fig
 
 # Streamlit App
 st.title('Visualización Molecular 3D')
 
 # Cargar los datos de la molécula
-coordinates, symbols, atom_radii = read_sdf('tu_archivo_sdf.sdf')
+file_path = st.text_input('Ingrese la ruta del archivo SDF', 'path/to/your/file.sdf')
+coordinates, symbols, atom_radii = read_sdf(file_path)
 
 # Configuración de controles para la orientación y traslación
 angle = st.slider('Ángulo de Rotación (grados)', 0, 360, 0)
