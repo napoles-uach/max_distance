@@ -107,7 +107,7 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
 
 st.title('3D Molecular Visualization with Rotation and Automatic Displacement Calculation')
 
-file_path = 'PCBM-3D-structure-CT1089645246.sdf'
+file_path = st.selectbox("Choose a molecule",['PCBM-3D-structure-CT1089645246.sdf','x'])#'PCBM-3D-structure-CT1089645246.sdf'
 molecule_data = read_sdf_from_file(file_path)
 molecule = Molecule(
     coordinates=[data[:3] for data in molecule_data],
