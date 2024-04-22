@@ -92,9 +92,9 @@ molecule = Molecule(
     atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
 )
 
-angle_x = st.slider('Rotation angle around X-axis (degrees)', -180, 180, 0)
-angle_y = st.slider('Rotation angle around Y-axis (degrees)', -180, 180, 0)
-angle_z = st.slider('Rotation angle around Z-axis (degrees)', -180, 180, 0)
+angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', -180, 180, 0)
+angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', -180, 180, 0)
+angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', -180, 180, 0)
 
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
 
