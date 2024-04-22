@@ -42,7 +42,7 @@ def plot_molecule_with_stmol(coordinates, symbols):
         xyz_data += f'{symbol} {coord[0]:.3f} {coord[1]:.3f} {coord[2]:.3f}\n'
     
     xyzview = py3Dmol.view(width=800, height=400)
-    xyzview.addModel(xyz_data, 'xyz')
+    xyzview.addModel(xyz_data, 'sdf')
     xyzview.setStyle({'sphere': {}})
     xyzview.setBackgroundColor('green')
     xyzview.zoomTo()
