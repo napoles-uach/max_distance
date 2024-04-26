@@ -130,9 +130,9 @@ if uploaded_file is not None:
     )
 #----------
 
-angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', -180, 180, 0)
-angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', -180, 180, 0)
-angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', -180, 180, 0)
+angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', 0, 360, 0)
+angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', 0, 360, 0)
+angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
 
