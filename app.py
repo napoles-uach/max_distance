@@ -138,6 +138,8 @@ angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', 0, 360, 0)
 angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
+
+st.sidebar.write("Coordinates of the direction vector")
 x_d=st.sidebar.number_input('x direction',value=1)
 y_d=st.sidebar.number_input('y direction',value=0)
 z_d=st.sidebar.number_input('z direction',value=0)
