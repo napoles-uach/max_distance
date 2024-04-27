@@ -143,7 +143,9 @@ y_d=st.sidebar.number_input('y direction',value=0)
 z_d=st.sidebar.number_input('z direction',value=0)
 direction_vector = np.array([x_d, y_d, z_d])
 max_displacement,atom_i,atom_j = calculate_contact(rotated_molecule, direction_vector)
-displacement_vector = np.array([max_displacement, 0, 0])
+#displacement_vector = np.array([max_displacement, 0, 0])
+displacement_vector = max_displacement*direction_vector/np.linalg.norm(direction_vector)
+
 transformed_coords = rotated_molecule.coordinates + displacement_vector
 transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, rotated_molecule.atom_radii)
 
