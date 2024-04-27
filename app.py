@@ -84,7 +84,7 @@ def calculate_contact(molecule, direction_vector):
                 displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
                 if displacement > max_displacement:
                     max_displacement = displacement
-    return max_displacement
+    return max_displacement,i , j
 
 
 
@@ -137,7 +137,7 @@ angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
 
 direction_vector = np.array([1, 0, 0])
-max_displacement = calculate_contact(rotated_molecule, direction_vector)
+max_displacement,atom_i,atom_j = calculate_contact(rotated_molecule, direction_vector)
 displacement_vector = np.array([max_displacement, 0, 0])
 transformed_coords = rotated_molecule.coordinates + displacement_vector
 transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, rotated_molecule.atom_radii)
