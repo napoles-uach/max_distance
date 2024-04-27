@@ -156,3 +156,6 @@ coordB =molecule.coordinates[atom_j]
 st.write(np.linalg.norm(coordB-coordA_ ))
 st.write(molecule.get_radius(atom_i) + molecule.get_radius(atom_j))
 
+st.write(coordA_)
+st.write(coordB)
+
