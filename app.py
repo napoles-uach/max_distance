@@ -84,7 +84,9 @@ def calculate_contact(molecule, direction_vector):
                 displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
                 if displacement > max_displacement:
                     max_displacement = displacement
-    return max_displacement,i , j
+                    index_i=i
+                    index_j=j
+    return max_displacement,index_i , index_j
 
 
 
