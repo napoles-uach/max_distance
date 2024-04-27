@@ -73,6 +73,7 @@ def apply_rotation(molecule, angles):
 def calculate_contact(molecule, direction_vector):
     n_atoms = len(molecule.coordinates)
     max_displacement = 0
+
     for i in range(n_atoms):
         for j in range(i + 1, n_atoms):
             distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
