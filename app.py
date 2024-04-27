@@ -87,7 +87,7 @@ def calculate_contact(molecule, direction_vector):
                     max_displacement = displacement
                     index_i=i
                     index_j=j
-    return max_displacement,index_i , index_j
+    return max_displacement#,index_i , index_j
 
 
 
@@ -144,7 +144,7 @@ x_d=st.sidebar.number_input('x direction',value=1)
 y_d=st.sidebar.number_input('y direction',value=0)
 z_d=st.sidebar.number_input('z direction',value=0)
 direction_vector = np.array([x_d, y_d, z_d])
-max_displacement,atom_i,atom_j = calculate_contact(rotated_molecule, direction_vector)
+max_displacement = calculate_contact(rotated_molecule, direction_vector)
 #displacement_vector = np.array([max_displacement, 0, 0])
 displacement_vector = max_displacement*direction_vector/np.linalg.norm(direction_vector)
 
@@ -163,13 +163,5 @@ st.download_button(
     mime='text/plain',
 )
 
-#coordA =rotated_molecule.coordinates[atom_i] 
-#coordA_=coordA - displacement_vector
-#coordB =rotated_molecule.coordinates[atom_j]
-#st.write(np.linalg.norm(coordB-coordA_ ))
-#st.write(rotated_molecule.get_radius(atom_i) + rotated_molecule.get_radius(atom_j))
 
-#st.write(coordA)
-#st.write(coordA_)
-#st.write(coordB)
 
