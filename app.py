@@ -138,7 +138,7 @@ angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', 0, 360, 0)
 angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
-
+st.number_input('x direction',value=1)
 direction_vector = np.array([1, 0, 0])
 max_displacement,atom_i,atom_j = calculate_contact(rotated_molecule, direction_vector)
 displacement_vector = np.array([max_displacement, 0, 0])
