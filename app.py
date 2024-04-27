@@ -75,7 +75,7 @@ def calculate_contact(molecule, direction_vector):
     max_displacement = 0
 
     for i in range(n_atoms):
-        for j in range(i + 1, n_atoms):
+        for j in range(i , n_atoms):
             distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
             distance = np.linalg.norm(distance_vector)
             projection = np.dot(distance_vector, direction_vector) / np.linalg.norm(direction_vector)
