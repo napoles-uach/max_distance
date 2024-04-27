@@ -151,11 +151,11 @@ st.markdown("## Displacement: "+"{:.2f}".format(max_displacement) + " Å")
 plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
 
-coordA =molecule.coordinates[atom_i] 
+coordA =rotated_molecule.coordinates[atom_i] 
 coordA_=coordA + displacement_vector
-coordB =molecule.coordinates[atom_j]
+coordB =rotated_molecule.coordinates[atom_j]
 st.write(np.linalg.norm(coordB-coordA_ ))
-st.write(molecule.get_radius(atom_i) + molecule.get_radius(atom_j))
+st.write(rotated_molecule.get_radius(atom_i) + rotated_molecule.get_radius(atom_j))
 
 st.write(coordA_)
 st.write(coordB)
