@@ -152,7 +152,7 @@ plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
 
 coordA =rotated_molecule.coordinates[atom_i] 
-coordA_=coordA + displacement_vector
+coordA_=coordA - displacement_vector
 coordB =rotated_molecule.coordinates[atom_j]
 st.write(np.linalg.norm(coordA-coordA_ ))
 st.write(rotated_molecule.get_radius(atom_i) + rotated_molecule.get_radius(atom_j))
