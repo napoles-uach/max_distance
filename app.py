@@ -149,9 +149,10 @@ transformed_xyz = generate_xyz_data(transformed_molecule)
 st.markdown("## Displacement: "+"{:.2f}".format(max_displacement) + " Å")
 plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
-st.write(np.linalg.norm(molecule.coordinates[atom_i]-molecule.coordinates[atom_j] ))
+
 coordA =molecule.coordinates[atom_i] 
 coordA_=coordA + displacement_vector
 coordB =molecule.coordinates[atom_j]
-st.write(coordA_)
+st.write(np.linalg.norm(coordB-coordA_ ))
+st.write(molecule.atom_radii[atom_i])
 
