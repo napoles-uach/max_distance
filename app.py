@@ -154,5 +154,5 @@ coordA =molecule.coordinates[atom_i]
 coordA_=coordA + displacement_vector
 coordB =molecule.coordinates[atom_j]
 st.write(np.linalg.norm(coordB-coordA_ ))
-st.write(molecule.get_radius(j))
+st.write(molecule.get_radius(atom_i))
 
