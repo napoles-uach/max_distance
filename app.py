@@ -156,6 +156,12 @@ transformed_xyz = generate_xyz_data(transformed_molecule)
 st.markdown("## Displacement: "+"{:.2f}".format(max_displacement) + " Å")
 plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
+st.download_button(
+    label="Download Original XYZ Data",
+    data=original_xyz,
+    file_name='original_molecule_data.xyz',
+    mime='text/plain',
+)
 
 #coordA =rotated_molecule.coordinates[atom_i] 
 #coordA_=coordA - displacement_vector
