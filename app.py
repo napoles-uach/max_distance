@@ -2,6 +2,7 @@ import streamlit as st
 from stmol import showmol
 import py3Dmol
 import numpy as np
+from utils import *
 
 class Molecule:
     def __init__(self, coordinates, symbols, atom_radii):
