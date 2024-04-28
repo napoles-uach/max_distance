@@ -2,7 +2,7 @@ import streamlit as st
 from stmol import showmol
 import py3Dmol
 import numpy as np
-from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file,apply_rotation
+from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file,apply_rotation,calculate_contact
 
 #class Molecule:
 #def __init__(self, coordinates, symbols, atom_radii):
@@ -71,24 +71,24 @@ from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from
 #    rotated_coords = np.dot(molecule.coordinates, R.T)
 #    return Molecule(rotated_coords, molecule.symbols, molecule.atom_radii)
 
-def calculate_contact(molecule, direction_vector):
-    n_atoms = len(molecule.coordinates)
-    max_displacement = 0
-
-    for i in range(n_atoms):
-        for j in range( n_atoms):
-            distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
-            distance = np.linalg.norm(distance_vector)
-            projection = np.dot(distance_vector, direction_vector) / np.linalg.norm(direction_vector)
-            normal_distance = np.sqrt(distance**2 - projection**2)
-            sum_vdw = molecule.get_radius(i) + molecule.get_radius(j)
-            if normal_distance <= sum_vdw:
-                displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
-                if displacement > max_displacement:
-                    max_displacement = displacement
-                    index_i=i
-                    index_j=j
-    return max_displacement#,index_i , index_j
+#def calculate_contact(molecule, direction_vector):
+#    n_atoms = len(molecule.coordinates)
+#    max_displacement = 0
+#
+#    for i in range(n_atoms):
+#        for j in range( n_atoms):
+#            distance_vector = molecule.coordinates[i] - molecule.coordinates[j]
+#            distance = np.linalg.norm(distance_vector)
+#            projection = np.dot(distance_vector, direction_vector) / np.linalg.norm(direction_vector)
+#            normal_distance = np.sqrt(distance**2 - projection**2)
+#            sum_vdw = molecule.get_radius(i) + molecule.get_radius(j)
+#            if normal_distance <= sum_vdw:
+#                displacement = projection + np.sqrt(max(sum_vdw**2 - normal_distance**2, 0))
+#                if displacement > max_displacement:
+#                    max_displacement = displacement
+#                    index_i=i
+#                    index_j=j
+#    return max_displacement#,index_i , index_j
 
 
 
