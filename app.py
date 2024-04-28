@@ -2,16 +2,16 @@ import streamlit as st
 from stmol import showmol
 import py3Dmol
 import numpy as np
-from utils import *
+from utils import Molecule
 
-class Molecule:
-    def __init__(self, coordinates, symbols, atom_radii):
-        self.coordinates = np.array(coordinates)
-        self.symbols = symbols
-        self.atom_radii = {symbol: atom_radii.get(symbol, 1.5) for symbol in symbols}
-
-    def get_radius(self, atom_index):
-        return self.atom_radii[self.symbols[atom_index]]
+#class Molecule:
+#def __init__(self, coordinates, symbols, atom_radii):
+#        self.coordinates = np.array(coordinates)
+#        self.symbols = symbols
+#        self.atom_radii = {symbol: atom_radii.get(symbol, 1.5) for symbol in symbols}
+#
+#    def get_radius(self, atom_index):
+#        return self.atom_radii[self.symbols[atom_index]]
 
 def read_sdf_from_string(content):
     lines = content.split('\n')
