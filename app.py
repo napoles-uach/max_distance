@@ -2,7 +2,7 @@ import streamlit as st
 from stmol import showmol
 import py3Dmol
 import numpy as np
-from utils.molecule_functions import Molecule,read_sdf_from_string
+from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file
 
 #class Molecule:
 #def __init__(self, coordinates, symbols, atom_radii):
@@ -36,31 +36,31 @@ from utils.molecule_functions import Molecule,read_sdf_from_string
 #                    continue
 #    return molecule_data
 
-def read_sdf_from_file(file_path):
-    with open(file_path, 'r') as file:
-        content = file.read()
-    
-    lines = content.split('\n')
-    molecule_data = []
-    reading_molecule = False
-
-    for line in lines:
-        if line.startswith('$$$$'):
-            reading_molecule = False
-        elif line.strip().endswith('V2000'):
-            reading_molecule = True
-            continue
-
-        if reading_molecule:
-            parts = line.strip().split()
-            if len(parts) >= 4 and parts[3].isalpha():
-                try:
-                    x, y, z = map(float, parts[:3])
-                    atom_type = parts[3]
-                    molecule_data.append((x, y, z, atom_type))
-                except ValueError:
-                    continue
-    return molecule_data
+#def read_sdf_from_file(file_path):
+#    with open(file_path, 'r') as file:
+#        content = file.read()
+#    
+#    lines = content.split('\n')
+#    molecule_data = []
+#    reading_molecule = False
+#
+#    for line in lines:
+#        if line.startswith('$$$$'):
+#            reading_molecule = False
+#        elif line.strip().endswith('V2000'):
+#            reading_molecule = True
+#            continue
+#
+#        if reading_molecule:
+#            parts = line.strip().split()
+#            if len(parts) >= 4 and parts[3].isalpha():
+#                try:
+#                    x, y, z = map(float, parts[:3])
+#                    atom_type = parts[3]
+#                    molecule_data.append((x, y, z, atom_type))
+#                except ValueError:
+#                    continue
+#    return molecule_data
 
 def apply_rotation(molecule, angles):
     rx, ry, rz = np.radians(angles)
