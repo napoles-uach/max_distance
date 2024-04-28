@@ -2,7 +2,7 @@ import streamlit as st
 from stmol import showmol
 import py3Dmol
 import numpy as np
-from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file
+from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file,apply_rotation
 
 #class Molecule:
 #def __init__(self, coordinates, symbols, atom_radii):
@@ -62,14 +62,14 @@ from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from
 #                    continue
 #    return molecule_data
 
-def apply_rotation(molecule, angles):
-    rx, ry, rz = np.radians(angles)
-    Rx = np.array([[1, 0, 0], [0, np.cos(rx), -np.sin(rx)], [0, np.sin(rx), np.cos(rx)]])
-    Ry = np.array([[np.cos(ry), 0, np.sin(ry)], [0, 1, 0], [-np.sin(ry), 0, np.cos(ry)]])
-    Rz = np.array([[np.cos(rz), -np.sin(rz), 0], [np.sin(rz), np.cos(rz), 0], [0, 0, 1]])
-    R = np.dot(Rz, np.dot(Ry, Rx))
-    rotated_coords = np.dot(molecule.coordinates, R.T)
-    return Molecule(rotated_coords, molecule.symbols, molecule.atom_radii)
+#def apply_rotation(molecule, angles):
+#    rx, ry, rz = np.radians(angles)
+#    Rx = np.array([[1, 0, 0], [0, np.cos(rx), -np.sin(rx)], [0, np.sin(rx), np.cos(rx)]])
+#    Ry = np.array([[np.cos(ry), 0, np.sin(ry)], [0, 1, 0], [-np.sin(ry), 0, np.cos(ry)]])
+#    Rz = np.array([[np.cos(rz), -np.sin(rz), 0], [np.sin(rz), np.cos(rz), 0], [0, 0, 1]])
+#    R = np.dot(Rz, np.dot(Ry, Rx))
+#    rotated_coords = np.dot(molecule.coordinates, R.T)
+#    return Molecule(rotated_coords, molecule.symbols, molecule.atom_radii)
 
 def calculate_contact(molecule, direction_vector):
     n_atoms = len(molecule.coordinates)
