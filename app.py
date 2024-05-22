@@ -114,7 +114,7 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
 st.markdown('## Automatic Molecular Displacement Calculation')
 
 col1,col2=st.columns([2,3])
-file_path = col1.selectbox("Choose a molecule",['PCBM','Pentacenetetrone','Cholesterol'])#'PCBM-3D-structure-CT1089645246.sdf'
+file_path = col1.selectbox("Choose a molecule",['PCBM','Cholesterol','Pentacenetetrone'])#'PCBM-3D-structure-CT1089645246.sdf'
 if file_path=='PCBM':
     file='PCBM-3D-structure-CT1089645246.sdf'
 if file_path=="Pentacenetetrone":
