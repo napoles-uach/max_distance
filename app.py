@@ -121,7 +121,7 @@ if file_path=="Penta":
     file='Conformer3D_COMPOUND_CID_4733.sdf'
 if file_path=="Cholesterol":
     file='cholesterol-3D-structure-CT1001897301.sdf'
-molecule_data = read_sdf_from_file(file_path)
+molecule_data = read_sdf_from_file(file)
 molecule = Molecule(
     coordinates=[data[:3] for data in molecule_data],
     symbols=[data[3] for data in molecule_data],
