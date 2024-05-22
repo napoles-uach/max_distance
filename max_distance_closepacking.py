@@ -144,7 +144,7 @@ def calculate_contact(molecule, direction_vector):
                     max_displacement = displacement
     return max_displacement
 
-# Suponiendo que tienes datos parseados de un archivo SDF
+
 #coordinates, symbols, radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
 atom_radii = {
     'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8
@@ -222,7 +222,7 @@ def plot_molecule(coordinates, symbols, atom_radii):
                       autosize=False, width=800, height=800, margin=dict(l=0, r=0, b=0, t=0))
     fig.show()
 
-# Suponiendo que el archivo SDF está en el directorio correcto
+# 
 #coordinates, symbols, atom_radii = read_sdf('/content/PCBM-3D-structure-CT1089645246.sdf')
 #plot_molecule(coordinates, symbols, atom_radii)
 
