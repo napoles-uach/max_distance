@@ -112,7 +112,7 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     showmol(xyzview, height=500, width=800)
 head1,head2,head3 = st.columns([4,1,2])
 head1.markdown('## Automatic Molecular Displacement Calculation')
-head3.write('Nápoles Duarte JM, Palomares Báez JP, Pacheco Contreras R, Chávez Rojo MA. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024; doi:10.26434/chemrxiv-2024-sm9rp This content is a preprint and has not been peer-reviewed.')
+head3.write('Nápoles Duarte JM, Palomares Báez JP, Pacheco Contreras R, Chávez Rojo MA. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024')
 head3.write('https://doi.org/10.26434/chemrxiv-2024-sm9rp')
 
 col1,col2=st.columns([2,3])
