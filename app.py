@@ -110,10 +110,10 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     xyzview.setBackgroundColor('white')
     xyzview.zoomTo()
     showmol(xyzview, height=500, width=800)
-head1,head2,head3 = st.columns([4,1,2])
+head1,head2 = st.columns([4,3])
 head1.markdown('## Automatic Molecular Displacement Calculation')
-head3.write('Nápoles Duarte JM, et. al. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024')
-head3.write('https://doi.org/10.26434/chemrxiv-2024-sm9rp')
+head2.write('Nápoles Duarte JM, et. al. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024')
+head2.write('https://doi.org/10.26434/chemrxiv-2024-sm9rp')
 
 col1,col2=st.columns([2,3])
 file_path = col1.selectbox("Choose a molecule",['PCBM','Cholesterol','Pentacenetetrone'])#'PCBM-3D-structure-CT1089645246.sdf'
