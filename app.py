@@ -153,7 +153,8 @@ st.sidebar.write("Coordinates of the direction vector")
 xc,yc,zc=st.sidebar.columns(3)
 with xc:
     x_d=st.sidebar.number_input('x direction',value=1)
-y_d=st.sidebar.number_input('y direction',value=0)
+with yc:
+    y_d=st.sidebar.number_input('y direction',value=0)
 z_d=st.sidebar.number_input('z direction',value=0)
 direction_vector = np.array([x_d, y_d, z_d])
 max_displacement = calculate_contact(rotated_molecule, direction_vector)
