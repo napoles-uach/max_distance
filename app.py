@@ -174,6 +174,7 @@ st.download_button(
 )
 
 st.markdown("# Ask a question about the paper.")
+@st.experimental_fragment
 process_paper(api_key=st.secrets["gpt_key"])
 
 
