@@ -182,6 +182,6 @@ def deploy_molecule():
 #st.sidebar.markdown("# Ask a question about the paper.")
 #deploy_molecule()
 #process_paper(api_key=st.secrets["gpt_key"])
-pg = st.navigation([st.Page(deploy_molecule), st.Page(process_paper)])
+pg = st.navigation([st.Page(deploy_molecule), st.Page(chat_paper_AI)])
 pg.run()
 
