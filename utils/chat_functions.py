@@ -92,7 +92,8 @@ def process_paper(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
           tool_resources={"file_search": {"vector_store_ids": [vector_store_id]}},
         )
 
-    ask = st.text_input("Ask")
+    #ask = st.text_input("Ask")
+    ask = st.chat_input("Ask something about the paper")
     if ask:
         with st.spinner('Processing your request...'):
             # Create a thread and attach the file to the message
