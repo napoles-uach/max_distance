@@ -3,6 +3,7 @@ from stmol import showmol
 import py3Dmol
 import numpy as np
 from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file,apply_rotation,calculate_contact
+from utils.chat_functions import process_paper
 
 #class Molecule:
 #def __init__(self, coordinates, symbols, atom_radii):
@@ -172,5 +173,6 @@ st.download_button(
     mime='text/plain',
 )
 
+process_paper(api_key=st.secrets["gpt_key"])
 
 
