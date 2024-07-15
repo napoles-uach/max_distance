@@ -15,8 +15,10 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
         st.info("what are the conclusions?")
     with info2:
         st.info("Why is this paper important?")
+        st.info("Explain figure 2")
     with info3:
         st.info("Explain the methodology")
+        st.info("what are the future directions?")
     def save_vector_store_id(vector_store_id):
         with open(vector_store_id_path, 'w') as f:
             json.dump({"vector_store_id": vector_store_id}, f)
