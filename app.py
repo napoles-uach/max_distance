@@ -3,7 +3,7 @@ from stmol import showmol
 import py3Dmol
 import numpy as np
 from utils.molecule_functions import Molecule,read_sdf_from_string,read_sdf_from_file,apply_rotation,calculate_contact
-from utils.chat_functions import process_paper
+from utils.chat_functions import chat_paper_AI
 
 #class Molecule:
 #def __init__(self, coordinates, symbols, atom_radii):
