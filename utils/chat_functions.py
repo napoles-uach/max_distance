@@ -12,6 +12,7 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
     info1,info2,info3 = st.columns(3)
     with info1:
         st.info("What are the main findings?")
+        st.info("what are the conclusions?")
     with info2:
         st.info("Why is this paper important?")
     with info3:
