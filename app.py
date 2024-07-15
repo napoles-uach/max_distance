@@ -111,74 +111,76 @@ def plot_molecule_with_stmol(original_xyz, transformed_xyz):
     xyzview.setBackgroundColor('white')
     xyzview.zoomTo()
     showmol(xyzview, height=500, width=800)
-head1,head2 = st.columns([4,3])
-head1.markdown('## Automatic Molecular Displacement Calculation')
-head2.write('Nápoles Duarte JM, et al. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024')
-head2.write('https://doi.org/10.26434/chemrxiv-2024-sm9rp')
 
-col1,col2=st.columns([2,3])
-file_path = col1.selectbox("Choose a molecule",['PCBM','Cholesterol','Pentacenetetrone'])#'PCBM-3D-structure-CT1089645246.sdf'
-if file_path=='PCBM':
-    file='PCBM-3D-structure-CT1089645246.sdf'
-if file_path=="Pentacenetetrone":
-    file='Conformer3D_COMPOUND_CID_4733.sdf'
-if file_path=="Cholesterol":
-    file='cholesterol-3D-structure-CT1001897301.sdf'
-molecule_data = read_sdf_from_file(file)
-molecule = Molecule(
-    coordinates=[data[:3] for data in molecule_data],
-    symbols=[data[3] for data in molecule_data],
-    atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
-)
+def deploy_molecule():
+    head1,head2 = st.columns([4,3])
+    head1.markdown('## Automatic Molecular Displacement Calculation')
+    head2.write('Nápoles Duarte JM, et al. Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing. ChemRxiv. 2024')
+    head2.write('https://doi.org/10.26434/chemrxiv-2024-sm9rp')
 
-#----------
-uploaded_file = col2.file_uploader("Upload your SDF file, only molecules with C,H,O,N,S atoms", type=["sdf"])
-if uploaded_file is not None:
-    file_content = uploaded_file.getvalue().decode("utf-8")
-    molecule_data = read_sdf_from_string(file_content)
+    col1,col2=st.columns([2,3])
+    file_path = col1.selectbox("Choose a molecule",['PCBM','Cholesterol','Pentacenetetrone'])#'PCBM-3D-structure-CT1089645246.sdf'
+    if file_path=='PCBM':
+        file='PCBM-3D-structure-CT1089645246.sdf'
+    if file_path=="Pentacenetetrone":
+        file='Conformer3D_COMPOUND_CID_4733.sdf'
+    if file_path=="Cholesterol":
+        file='cholesterol-3D-structure-CT1001897301.sdf'
+    molecule_data = read_sdf_from_file(file)
     molecule = Molecule(
         coordinates=[data[:3] for data in molecule_data],
         symbols=[data[3] for data in molecule_data],
         atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
     )
+
+#----------
+    uploaded_file = col2.file_uploader("Upload your SDF file, only molecules with C,H,O,N,S atoms", type=["sdf"])
+    if uploaded_file is not None:
+        file_content = uploaded_file.getvalue().decode("utf-8")
+        molecule_data = read_sdf_from_string(file_content)
+        molecule = Molecule(
+            coordinates=[data[:3] for data in molecule_data],
+            symbols=[data[3] for data in molecule_data],
+            atom_radii={'C': 1.7, 'H': 1.2, 'O': 1.52, 'N': 1.55, 'S': 1.8}
+        )
 #----------
 
-angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', 0, 360, 0)
-angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', 0, 360, 0)
-angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
+    angle_x = st.sidebar.slider('Rotation angle around X-axis (degrees)', 0, 360, 0)
+    angle_y = st.sidebar.slider('Rotation angle around Y-axis (degrees)', 0, 360, 0)
+    angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 
-rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
+    rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
 
-st.sidebar.write("Coordinates of the direction vector")
-xc,yc,zc=st.sidebar.columns(3)
-with xc:
-    x_d=st.number_input('x direction',value=1)
-with yc:
-    y_d=st.number_input('y direction',value=0)
-with zc:
-    z_d=st.number_input('z direction',value=0)
-direction_vector = np.array([x_d, y_d, z_d])
-max_displacement = calculate_contact(rotated_molecule, direction_vector)
-#displacement_vector = np.array([max_displacement, 0, 0])
-displacement_vector = max_displacement*direction_vector/np.linalg.norm(direction_vector)
+    st.sidebar.write("Coordinates of the direction vector")
+    xc,yc,zc=st.sidebar.columns(3)
+    with xc:
+        x_d=st.number_input('x direction',value=1)
+    with yc:
+        y_d=st.number_input('y direction',value=0)
+    with zc:
+        z_d=st.number_input('z direction',value=0)
+    direction_vector = np.array([x_d, y_d, z_d])
+    max_displacement = calculate_contact(rotated_molecule, direction_vector)
+    #displacement_vector = np.array([max_displacement, 0, 0])
+    displacement_vector = max_displacement*direction_vector/np.linalg.norm(direction_vector)
 
-transformed_coords = rotated_molecule.coordinates + displacement_vector
-transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, rotated_molecule.atom_radii)
+    transformed_coords = rotated_molecule.coordinates + displacement_vector
+    transformed_molecule = Molecule(transformed_coords, rotated_molecule.symbols, rotated_molecule.atom_radii)
 
-original_xyz = generate_xyz_data(rotated_molecule)
-transformed_xyz = generate_xyz_data(transformed_molecule)
-st.markdown("## Displacement: "+"{:.2f}".format(max_displacement) + " Å")
-plot_molecule_with_stmol(original_xyz,transformed_xyz)
+    original_xyz = generate_xyz_data(rotated_molecule)
+    transformed_xyz = generate_xyz_data(transformed_molecule)
+    st.markdown("## Displacement: "+"{:.2f}".format(max_displacement) + " Å")
+    plot_molecule_with_stmol(original_xyz,transformed_xyz)
 
-st.download_button(
-    label="Download molecule",
-    data=original_xyz,
-    file_name='original_molecule_data.xyz',
-    mime='text/plain',
-)
+    st.download_button(
+        label="Download molecule",
+        data=original_xyz,
+        file_name='original_molecule_data.xyz',
+        mime='text/plain',
+    )
 
-st.sidebar.markdown("# Ask a question about the paper.")
-
+#st.sidebar.markdown("# Ask a question about the paper.")
+deploy_molecule()
 process_paper(api_key=st.secrets["gpt_key"])
 
 
