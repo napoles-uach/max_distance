@@ -7,7 +7,7 @@ from rich import print
 def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", vector_store_id_path="vector_store_id.json", file_id_path="file_id.json"):
     # Initialize the OpenAI client
     client = OpenAI(api_key=api_key)
-    st.markdown("# Ask questions related to the Paper 'Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing'")
+    st.markdown("## Ask questions related to the Paper 'Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing'")
 
     def save_vector_store_id(vector_store_id):
         with open(vector_store_id_path, 'w') as f:
