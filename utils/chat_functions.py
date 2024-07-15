@@ -2,6 +2,7 @@ import streamlit as st
 from openai import OpenAI
 import os
 import json
+from rich import print
 
 def process_paper(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", vector_store_id_path="vector_store_id.json", file_id_path="file_id.json"):
     # Initialize the OpenAI client
@@ -95,6 +96,7 @@ def process_paper(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
     #ask = st.text_input("Ask")
     ask = st.chat_input("Ask something about the paper")
     if ask:
+        print(ask)
         with st.spinner('Processing your request...'):
             # Create a thread and attach the file to the message
             thread = client.beta.threads.create(
@@ -129,5 +131,6 @@ def process_paper(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
                 # Example usage (replace 'sync_cursor_page' with your actual object)
                 valor = extraer_valor(messages)
                 st.write(valor)
+                print(valor)
             else:
                 st.warning(f"Run status: {run.status}")
