@@ -80,7 +80,7 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
         else:
             st.error("The file 'paper.pdf' does not exist. Please make sure the file is in the correct location.")
     else:
-        st.success('Document ready.')
+        print('Document ready.')
 
     # Create an assistant
     with st.spinner('Creating assistant...'):
