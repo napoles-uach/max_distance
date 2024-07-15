@@ -75,7 +75,7 @@ def process_paper(api_key, local_file_path="paper.pdf", vector_store_id_path="ve
         else:
             st.error("The file 'paper.pdf' does not exist. Please make sure the file is in the correct location.")
     else:
-        st.success('Using previously uploaded file.')
+        st.success('Using previously uploaded document.')
 
     # Create an assistant
     with st.spinner('Creating assistant...'):
