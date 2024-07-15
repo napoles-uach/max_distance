@@ -177,7 +177,7 @@ st.download_button(
     mime='text/plain',
 )
 
-st.markdown("# Ask a question about the paper.")
+st.sidebar.markdown("# Ask a question about the paper.")
 
 process_paper(api_key=st.secrets["gpt_key"])
 
