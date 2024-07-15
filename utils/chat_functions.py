@@ -13,7 +13,7 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
     with info1:
         st.info("What are the main findings?")
     with info2:
-        st.info("Why is this research important?")
+        st.info("Why is this paper important?")
     with info3:
         st.info("Explain the methodology")
     def save_vector_store_id(vector_store_id):
