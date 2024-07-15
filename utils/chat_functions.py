@@ -4,7 +4,7 @@ import os
 import json
 from rich import print
 
-def process_paper(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", vector_store_id_path="vector_store_id.json", file_id_path="file_id.json"):
+def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", vector_store_id_path="vector_store_id.json", file_id_path="file_id.json"):
     # Initialize the OpenAI client
     client = OpenAI(api_key=api_key)
 
