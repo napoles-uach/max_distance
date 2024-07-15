@@ -11,11 +11,11 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
     st.markdown("Examples:")
     info1,info2,info3 = st.columns(3)
     with info1:
-        st.write("What are the main findings?")
+        st.info("What are the main findings?")
     with info2:
-        st.write("Why is this research important?")
+        st.info("Why is this research important?")
     with info3:
-        st.write("Explain the methodology")
+        st.info("Explain the methodology")
     def save_vector_store_id(vector_store_id):
         with open(vector_store_id_path, 'w') as f:
             json.dump({"vector_store_id": vector_store_id}, f)
