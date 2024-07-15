@@ -7,7 +7,8 @@ from rich import print
 def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", vector_store_id_path="vector_store_id.json", file_id_path="file_id.json"):
     # Initialize the OpenAI client
     client = OpenAI(api_key=api_key)
-    st.markdown('''## Query system for the paper\\ 
+    st.markdown('''## Query system for the paper
+    
     [Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing](https://doi.org/10.26434/chemrxiv-2024-sm9rp)''')
     st.markdown('''Examples:\\
      What are the main findings?\\
