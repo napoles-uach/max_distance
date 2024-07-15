@@ -8,10 +8,14 @@ def chat_paper_AI(api_key=st.secrets["gpt_key"], local_file_path="paper.pdf", ve
     # Initialize the OpenAI client
     client = OpenAI(api_key=api_key)
     st.markdown("### Query system for the paper [Non-Overlapping Arrangement of Identical Objects: An insight for molecular close packing](https://doi.org/10.26434/chemrxiv-2024-sm9rp)")
-    st.markdown('''Examples:\\
-     What are the main findings?\\
-     Why is this research important?\\
-     Explain the methodology''')
+    st.markdown("Examples:")
+    info1,info2,info3 = st.columns(3)
+    with info1:
+        st.write("What are the main findings?")
+    with info2:
+        st.write("Why is this research important?")
+    with infor3:
+        st.write("Explain the methodology")
     def save_vector_store_id(vector_store_id):
         with open(vector_store_id_path, 'w') as f:
             json.dump({"vector_store_id": vector_store_id}, f)
