@@ -150,12 +150,13 @@ angle_z = st.sidebar.slider('Rotation angle around Z-axis (degrees)', 0, 360, 0)
 rotated_molecule = apply_rotation(molecule, (angle_x, angle_y, angle_z))
 
 st.sidebar.write("Coordinates of the direction vector")
-xc,yc,zc=st.columns(3)
+xc,yc,zc=st.sidebar.columns(3)
 with xc:
     x_d=st.number_input('x direction',value=1)
 with yc:
-    y_d=st.sidebar.number_input('y direction',value=0)
-z_d=st.sidebar.number_input('z direction',value=0)
+    y_d=st.number_input('y direction',value=0)
+with zc:
+    z_d=st.number_input('z direction',value=0)
 direction_vector = np.array([x_d, y_d, z_d])
 max_displacement = calculate_contact(rotated_molecule, direction_vector)
 #displacement_vector = np.array([max_displacement, 0, 0])
