@@ -180,7 +180,7 @@ def chat_paper_AI(
                 "Using \\[ \\] or \\( \\) is forbidden. "
                 "Use your knowledge base to answer questions about the paper."
             ),
-            model="gpt-3.5-turbo",
+            model="gpt-5-nano",
             tools=[{"type": "file_search"}],
         )
 
